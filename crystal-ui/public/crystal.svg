@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <!-- 左侧带颜色 -->
+  <polygon points="100,20 140,100 100,180 60,100" fill="#87CEEB" />
+
+  <!-- 右侧为空 -->
+  <polygon points="100,20 140,100 100,180" fill="none" stroke="#87CEEB" stroke-width="4" />
+
+  <!-- 中心强调线条 -->
+  <line x1="100" y1="20" x2="100" y2="180" stroke="#87CEEB" stroke-width="4" />
+  
+  <!-- 夸张的水晶侧面 -->
+  <polygon points="60,100 100,180 100,140 80,120" fill="#87CEEB" />
+  <polygon points="140,100 100,20 100,60 120,80" fill="none" stroke="#87CEEB" stroke-width="2" />
+</svg>

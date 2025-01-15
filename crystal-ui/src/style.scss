@@ -1,0 +1,17 @@
+:root {
+  // 浅色主题 - 使用青绿色系
+  --primary-color: #0d9488;        // 主青绿色
+  --primary-light: #14b8a6;        // 浅青绿色
+  --secondary-color: #2dd4bf;      // 更浅的青绿色
+  --tertiary-color: #5eead4;       // 最浅的青绿色
+  --background-color: #f8fafc;     // 浅灰背景
+  --surface-color: #ffffff;        // 白色表面
+  --text-primary: #1e293b;         // 主要文字颜色
+  --text-secondary: #64748b;       // 次要文字颜色
+  --border-color: #e2e8f0;         // 边框颜色
+  --hover-color: #f0fdfa;          // 悬停颜色（浅青绿）
+  --padding: 24px;
+  --border-radius: 8px;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
