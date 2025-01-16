@@ -25,7 +25,7 @@
 import { ref } from 'vue'
 
 export default {
-  name: 'Header',
+  name: 'CrystalHeader',
   setup() {
     const isDark = ref(false)
 
