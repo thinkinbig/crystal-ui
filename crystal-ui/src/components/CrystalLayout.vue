@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Header />
+    <CrystalHeader />
     <div class="main-content">
       <aside class="sidebar">
         <nav>
@@ -26,7 +26,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import CrystalHeader from './Header.vue'
+import CrystalHeader from './CrystalHeader.vue'
 
 export default defineComponent({
   name: 'CrystalLayout',

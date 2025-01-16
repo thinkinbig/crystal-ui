@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './style.scss'
-import Dashboard from './Dashboard.vue'
+import CrystalDashboard from './CrystalDashboard.vue'
 
-createApp(Dashboard)
+createApp(CrystalDashboard)
     .use(createPinia())
     .mount('#app')

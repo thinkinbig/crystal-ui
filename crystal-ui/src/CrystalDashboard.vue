@@ -6,12 +6,12 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import CrystalLayout from './components/Layout.vue'
+import CrystalLayout from './components/CrystalLayout.vue'
 import Component1 from './components/Component1.vue'
 import Component2 from './components/Component2.vue'
 
 export default defineComponent({
-  name: 'Dashboard',
+  name: 'CrystalDashboard',
   components: {
     CrystalLayout,
     Component1,
