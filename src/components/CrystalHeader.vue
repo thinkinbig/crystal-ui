@@ -21,20 +21,25 @@
   </header>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'CrystalHeader',
   setup() {
-    const isDark = ref(false)
+    const isDark = ref<boolean>(false)
 
-    const toggleTheme = () => {
+    const initTheme = (): void => {
+      const theme = localStorage.getItem('theme') || 'light'
+      isDark.value = theme === 'dark'
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    const toggleTheme = (): void => {
       isDark.value = !isDark.value
-      document.documentElement.setAttribute(
-        'data-theme',
-        isDark.value ? 'dark' : 'light'
-      )
+      const theme = isDark.value ? 'dark' : 'light'
+      document.documentElement.setAttribute('data-theme', theme)
+      localStorage.setItem('theme', theme)
     }
 
     return {
@@ -42,7 +47,7 @@ export default {
       toggleTheme
     }
   }
-}
+})
 </script>
 
 <style scoped>
