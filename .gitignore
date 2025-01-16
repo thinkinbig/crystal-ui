@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Package lock files
 package-lock.json
 pnpm-lock.yaml
+
+.vscode
