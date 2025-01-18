@@ -11,10 +11,3 @@ interface Theme {
   background: string
   text: string
 }
-
-// 组件相关类型
-interface MenuItem {
-  name: string
-  label: string
-  icon: string
-} 

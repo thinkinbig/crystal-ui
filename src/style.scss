@@ -1,35 +1,18 @@
-:root {
-  // 浅色主题 - 使用青绿色系
-  --primary-color: #0d9488;        // 主青绿色
-  --primary-light: #14b8a6;        // 浅青绿色
-  --secondary-color: #2dd4bf;      // 更浅的青绿色
-  --tertiary-color: #5eead4;       // 最浅的青绿色
-  --background-color: #f8fafc;     // 浅灰背景
-  --surface-color: #ffffff;        // 白色表面
-  --text-primary: #1e293b;         // 主要文字颜色
-  --text-secondary: #64748b;       // 次要文字颜色
-  --border-color: #e2e8f0;         // 边框颜色
-  --hover-color: #f0fdfa;          // 悬停颜色（浅青绿）
-  --padding: 24px;
-  --border-radius: 8px;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-}
+@use '@/styles/variables' as vars;
 
-[data-theme="dark"] {
-  // 深色主题变量
-  --primary-color: #6366f1;        // 主紫色
-  --primary-light: #818cf8;        // 浅紫色
-  --secondary-color: #a5b4fc;      // 更浅的紫色
-  --tertiary-color: #c7d2fe;       // 最浅的紫色
-  --background-color: #0f172a;     // 深灰色背景
-  --surface-color: #1e293b;        // 深灰色表面
-  --text-primary: #f1f5f9;         // 白色文字
-  --text-secondary: #94a3b8;       // 灰色文字
-  --border-color: #334155;         // 深灰色边框
-  --hover-color: #1e1b4b;          // 深紫色悬停颜色
-  --padding: 24px;
-  --border-radius: 8px;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+:root {
+  --primary-color: vars.$primary-color;
+  --secondary-color: vars.$secondary-color;
+  --tertiary-color: vars.$tertiary-color;
+  --background-color: vars.$background-color;
+  --surface-color: vars.$surface-color;
+  --text-primary: vars.$text-primary;
+  --text-secondary: vars.$text-secondary;
+  --border-color: vars.$border-color;
+  --hover-color: vars.$hover-color;
+  --padding: vars.$padding;
+  --border-radius: vars.$border-radius;
+  --shadow-sm: vars.$shadow-sm;
+  --shadow-md: vars.$shadow-md;
+  --primary-color-rgb: #{$primary-color-rgb};
 }
