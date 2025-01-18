@@ -22,29 +22,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
+import { useThemeStore } from '@/stores/themeStore'
 
 export default defineComponent({
   name: 'CrystalHeader',
   setup() {
-    const isDark = ref<boolean>(false)
-
-    const initTheme = (): void => {
-      const theme = localStorage.getItem('theme') || 'light'
-      isDark.value = theme === 'dark'
-      document.documentElement.setAttribute('data-theme', theme)
-    }
-
-    const toggleTheme = (): void => {
-      isDark.value = !isDark.value
-      const theme = isDark.value ? 'dark' : 'light'
-      document.documentElement.setAttribute('data-theme', theme)
-      localStorage.setItem('theme', theme)
-    }
+    const themeStore = useThemeStore()
+    themeStore.initTheme()
 
     return {
-      isDark,
-      toggleTheme
+      isDark: themeStore.isDark,
+      toggleTheme: themeStore.toggleTheme
     }
   }
 })

@@ -5,7 +5,7 @@
       <aside class="sidebar">
         <nav>
           <ul>
-            <li 
+            <li
               v-for="(item, index) in menuItems"
               :key="index"
               @click="selectComponent(item.name)"
@@ -21,17 +21,20 @@
         <slot></slot>
       </main>
     </div>
+    <CrystalFooter />
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import CrystalHeader from './CrystalHeader.vue'
+import CrystalFooter from './CrystalFooter.vue'
 
 export default defineComponent({
   name: 'CrystalLayout',
   components: {
-    CrystalHeader
+    CrystalHeader,
+    CrystalFooter
   },
   props: {
     currentComponent: {
@@ -61,7 +64,7 @@ export default defineComponent({
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--background-color);
 }
 

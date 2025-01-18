@@ -1,12 +1,15 @@
 <template>
-  <CrystalLayout v-model:currentComponent="currentComponent">
-    <component :is="currentComponent" />
-  </CrystalLayout>
+  <div :class="themeClass">
+    <CrystalLayout v-model:currentComponent="currentComponent">
+      <component :is="currentComponent" />
+    </CrystalLayout>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
-import CrystalLayout from './components/CrystalLayout.vue'
+import { useThemeStore } from '@/stores/themeStore'
+import CrystalLayout from './components/Layout/CrystalLayout.vue'
 import Component1 from './components/Component1.vue'
 import Component2 from './components/Component2.vue'
 
@@ -19,9 +22,12 @@ export default defineComponent({
   },
   setup() {
     const currentComponent = ref('Component1')
+    const themeStore = useThemeStore()
+    themeStore.initTheme()
 
     return {
-      currentComponent
+      currentComponent,
+      themeClass: themeStore.themeClass
     }
   }
 })
