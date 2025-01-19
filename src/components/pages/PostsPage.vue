@@ -79,7 +79,7 @@ import TagList from '@/components/common/TagList.vue'
 
 // State
 const searchQuery = ref('')
-const selectedCategory = ref<string>('')
+const selectedCategory = ref<number | null>(null)
 const currentPage = ref(1)
 const pageSize = ref(9)
 
