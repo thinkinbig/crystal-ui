@@ -15,7 +15,7 @@
             </Transition>
             
             <Transition name="fade-right" appear>
-              <p class="subtitle">A Beautiful Vue 3 Component Library</p>
+              <p class="subtitle">Share your thoughts, ideas, and stories</p>
             </Transition>
           </div>
         </div>
@@ -25,10 +25,13 @@
             <div class="search-container">
               <el-input
                 v-model="searchQuery"
-                placeholder="Search components..."
-                :prefix-icon="Search"
+                placeholder="Search articles..."
                 class="search-input"
-              />
+              >
+                <template #prefix>
+                  <el-icon><Search /></el-icon>
+                </template>
+              </el-input>
             </div>
           </Transition>
           
@@ -36,41 +39,68 @@
             <div class="actions">
               <el-button 
                 type="primary" 
-                @click="getStarted"
+                @click="createPost"
                 class="action-button"
               >
-                Get Started
+                Create Post
               </el-button>
               <el-button 
-                @click="viewComponents"
+                @click="viewPosts"
                 class="action-button"
               >
-                View Components
+                View Posts
               </el-button>
             </div>
           </Transition>
         </div>
 
-        <Transition name="fade" appear>
-          <div class="theme-toggle">
-            <el-switch
-              v-model="isDark"
-              inline-prompt
-              :active-icon="Moon"
-              :inactive-icon="Sunny"
-            />
-          </div>
-        </Transition>
+        <div class="theme-toggle">
+          <el-switch
+            v-model="isDark"
+            inline-prompt
+            class="theme-switch"
+          />
+        </div>
       </header>
+
+      <!-- Featured Posts Section -->
+      <section class="featured-posts">
+        <h2 class="section-title">Featured Posts</h2>
+        <div class="posts-grid">
+          <PostCard 
+            v-for="post in featuredPosts" 
+            :key="post.id" 
+            :post="post"
+          />
+        </div>
+      </section>
+
+      <!-- Categories Section -->
+      <section class="categories">
+        <h2 class="section-title">Categories</h2>
+        <div class="category-grid">
+          <CategoryButton
+            v-for="(category, index) in categories"
+            :key="category.id"
+            :category="category"
+            :color="categoryColors[index % categoryColors.length]"
+            :count="categoryCounts[category.id]"
+            :is-active="selectedCategory === category.id"
+            @select="handleCategorySelect"
+          />
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { Search, Moon, Sunny } from '@element-plus/icons-vue'
+import { ref, computed, onUnmounted } from 'vue'
+import { Search } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { isDarkMode, toggleDarkMode } from '@/stores/themeStore'
+import PostCard from '@/components/common/PostCard.vue'
+import CategoryButton from '@/components/common/CategoryButton.vue'
 
 const router = useRouter()
 const searchQuery = ref('')
@@ -81,19 +111,54 @@ const isDark = computed({
   set: () => toggleDarkMode()
 })
 
-onMounted(() => {
-  // Trigger expansion animation after mount
-  setTimeout(() => {
-    isExpanded.value = true
-  }, 100)
-})
+// Mock data for featured posts
+const featuredPosts = ref([
+  {
+    id: 1,
+    title: 'Getting Started with Vue 3',
+    excerpt: 'Learn the basics of Vue 3 and its composition API...',
+    image: 'http://picsum.photos/id/123/200/100',
+    date: '2024-01-15',
+    author: 'John Doe',
+    category: { id: 1, name: 'Vue' },
+    views: 1200,
+    likes: 45,
+    tags: ['Vue3', 'JavaScript', 'Frontend']
+  },
+  {
+    id: 2,
+    title: 'Mastering TypeScript',
+    excerpt: 'Deep dive into TypeScript features and best practices for large-scale applications.',
+    image: 'https://picsum.photos/seed/typescript/400/300',
+    date: '2024-03-14',
+    author: 'Jane Smith'
+  },
+  {
+    id: 3,
+    title: 'Modern CSS Techniques',
+    excerpt: 'Explore the latest CSS features and how to use them effectively in your projects.',
+    image: 'https://picsum.photos/seed/css/400/300',
+    date: '2024-03-13',
+    author: 'Mike Johnson'
+  }
+])
 
-const getStarted = () => {
-  router.push('/guide')
+// Categories with Element Plus icons
+const categories = ref([
+  { id: 1, name: 'Technology', icon: 'Monitor' },
+  { id: 2, name: 'Design', icon: 'Brush' },
+  { id: 3, name: 'Development', icon: 'Terminal' },
+  { id: 4, name: 'Tutorials', icon: 'Reading' },
+  { id: 5, name: 'News', icon: 'Bell' },
+  { id: 6, name: 'Tips & Tricks', icon: 'Magic-stick' }
+])
+
+const createPost = () => {
+  router.push('/create-post')
 }
 
-const viewComponents = () => {
-  router.push('/components')
+const viewPosts = () => {
+  router.push('/posts')
 }
 
 // Mouse movement effect
@@ -118,6 +183,24 @@ const handleMouseMove = (event: MouseEvent) => {
 onUnmounted(() => {
   window.removeEventListener('mousemove', handleMouseMove)
 })
+
+const categoryColors = ['primary', 'success', 'warning', 'danger', 'info'] as const
+const selectedCategory = ref<number | null>(null)
+
+// Mock category counts
+const categoryCounts = {
+  1: 15,
+  2: 8,
+  3: 12,
+  4: 5,
+  5: 20,
+  6: 7
+}
+
+const handleCategorySelect = (id: number) => {
+  selectedCategory.value = selectedCategory.value === id ? null : id
+  // Additional logic here...
+}
 </script>
 
 <style scoped>
@@ -201,7 +284,7 @@ onUnmounted(() => {
 
 .container {
   position: relative;
-  width: 0;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   background: var(--surface-color);
@@ -218,7 +301,6 @@ onUnmounted(() => {
     rgba(255, 255, 255, 0.05)
   );
   border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .container.expanded {
@@ -226,11 +308,13 @@ onUnmounted(() => {
 }
 
 .header {
-  display: flex;
-  padding: 60px;
-  position: relative;
-  z-index: 1;
-  min-width: 1200px;
+  padding: 40px;
+  background: linear-gradient(
+    to right bottom,
+    rgba(var(--primary-color-rgb), 0.1),
+    rgba(var(--primary-color-rgb), 0.05)
+  );
+  border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.1);
 }
 
 .left-content {
@@ -503,5 +587,144 @@ onUnmounted(() => {
 .fade-left-enter-from {
   opacity: 0;
   transform: translateX(20px);
+}
+
+.featured-posts, .categories {
+  padding: 40px;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.post-card {
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.1);
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.post-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.1);
+}
+
+.post-content {
+  padding: 20px;
+}
+
+.post-content h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.post-content p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.category-button {
+  width: 100%;
+  height: 48px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.category-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    border-radius: 16px;
+  }
+
+  .featured-posts, .categories {
+    margin: 10px;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Add these new styles */
+.featured-posts, .categories {
+  background-color: var(--surface-color);
+  margin: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.section-title:hover::after {
+  transform: scaleX(1);
 }
 </style> 
